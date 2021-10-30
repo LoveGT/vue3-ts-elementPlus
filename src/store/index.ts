@@ -1,11 +1,30 @@
-import { createStore } from 'vuex'
+import { createStore, Store, useStore as useVuexStore } from 'vuex'
 
-const store = createStore({
+import login from './login/login'
+
+import { IRootState, IStoreType } from './types'
+
+const store = createStore<IRootState>({
 	state: () => {
 		return {
-			name: 'gaotao'
+			name: 'gaotao',
+			age: 18
 		}
+	},
+	getters: {},
+	mutations: {},
+	actions: {},
+	modules: {
+		login
 	}
 })
+// console.log(useVuexStore, 'store')
 
+export function setupStroe() {
+	store.dispatch('login/loadLocalLogin')
+}
+
+export function useStore(): Store<IStoreType> {
+	return useVuexStore()
+}
 export default store

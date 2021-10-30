@@ -1,25 +1,30 @@
 <template>
-	<div>
-		<h2>hello login</h2>
-		<el-button plain>nihao</el-button>
-		<el-button type="primary" icon="el-icon-edit" circle></el-button>
-		<el-button type="success">nihao</el-button>
-		<el-button type="warning">nihao</el-button>
-		<el-button type="danger">nihao</el-button>
-		<el-button type="success">nihao</el-button>
-		<el-input></el-input>
+	<div class="login">
+		<login-panel></login-panel>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import LoginPanel from './cpns/login-panel.vue'
 
 export default defineComponent({
+	components: {
+		LoginPanel
+	},
 	setup() {
 		return {}
-	},
-	components: {}
+	}
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.login {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background: url('../../assets/img/login-bg.svg');
+}
+</style>
