@@ -10,6 +10,7 @@ import './assets/css/index.less'
 // 全局引入
 // import ElementPlus from 'element-plus'
 // import 'element-plus/lib/theme-chalk/index.css'
+// 统一导入el-icon图标
 
 import App from './App.vue'
 

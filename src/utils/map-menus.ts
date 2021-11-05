@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 	const routes: RouteRecordRaw[] = []
+
 	//1. 先去加载默认所有的routes
 	const allRoutes: RouteRecordRaw[] = []
 	const routerFiles = require.context('../router/main', true, /\.ts/)
@@ -12,7 +13,7 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 		const route = require('../router/main' + key.split('.')[1])
 		allRoutes.push(route.default)
 	})
-	console.log(allRoutes, 'all')
+	// console.log(allRoutes, 'all')
 
 	//2. 根据菜单获取需要添加的routes
 	// userMenus:
@@ -30,6 +31,8 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 			}
 		}
 	}
+
+	_recurseGetRoute(userMenus)
 	console.log(routes, 'mapmpa')
 	return routes
 }
