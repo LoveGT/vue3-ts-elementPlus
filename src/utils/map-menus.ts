@@ -33,6 +33,5 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 	}
 
 	_recurseGetRoute(userMenus)
-	console.log(routes, 'mapmpa')
 	return routes
 }

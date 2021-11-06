@@ -4,6 +4,7 @@
 			<span class="el-dropdown-link">
 				<el-avatar size="medium">user</el-avatar>
 				<span class="name">{{ name }}</span>
+				<i class="el-icon-arrow-down el-icon--right"></i>
 			</span>
 			<template #dropdown>
 				<el-dropdown-menu>
@@ -21,14 +22,12 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
-console.log()
 
 export default defineComponent({
 	setup() {
 		const store = useStore()
 
 		const name = computed(() => store.state.login.userInfo.name)
-		console.log(name, 'name')
 		return { name }
 	}
 })

@@ -26,7 +26,6 @@ const loginModule: Module<ILoginState, IRootState> = {
 	mutations: {
 		changeToken(state, token: string) {
 			state.token = token
-			console.log(state.token, 'store.token')
 		},
 		changeUserInfo(state, userInfo) {
 			state.userInfo = userInfo
@@ -39,7 +38,6 @@ const loginModule: Module<ILoginState, IRootState> = {
 
 			// 将routes => router.man.children
 			routes.forEach((route) => router.addRoute('main', route))
-			console.log(routes, 'routes')
 		}
 	},
 	actions: {

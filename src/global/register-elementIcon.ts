@@ -1,6 +1,5 @@
 import { App } from 'vue'
 
-import * as ElIconModules from '@element-plus/icons'
 import {
 	ElAside,
 	ElButton,
@@ -12,7 +11,6 @@ import {
 	ElForm,
 	ElFormItem,
 	ElHeader,
-	ElIcon,
 	ElInput,
 	ElLink,
 	ElMain,
@@ -45,8 +43,7 @@ const components = [
 	ElSubmenu,
 	ElDropdown,
 	ElDropdownMenu,
-	ElDropdownItem,
-	ElIcon
+	ElDropdownItem
 ]
 
 export default function (app: App): void {
