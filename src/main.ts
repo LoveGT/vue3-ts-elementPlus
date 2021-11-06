@@ -11,6 +11,7 @@ import './assets/css/index.less'
 // import ElementPlus from 'element-plus'
 // import 'element-plus/lib/theme-chalk/index.css'
 // 统一导入el-icon图标
+import { Expand } from '@element-plus/icons'
 
 import App from './App.vue'
 
@@ -20,6 +21,8 @@ import store from './store'
 import { setupStroe } from './store'
 
 const app = createApp(App)
+
+app.component('expand', Expand)
 
 // 注册element-plus/其他
 app.use(globalRegister)

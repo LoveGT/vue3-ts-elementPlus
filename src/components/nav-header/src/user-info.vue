@@ -2,11 +2,8 @@
 	<div class="user-info">
 		<el-dropdown>
 			<span class="el-dropdown-link">
-				Dropdown List
-				<el-icon class="el-icon--right">
-					<Edit />
-					<Fold />
-				</el-icon>
+				<el-avatar size="medium">user</el-avatar>
+				<span class="name">{{ name }}</span>
 			</span>
 			<template #dropdown>
 				<el-dropdown-menu>
@@ -22,13 +19,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { Fold } from '@element-plus/icons'
-import { Edit } from '@element-plus/icons'
+import { computed, defineComponent } from 'vue'
+import { useStore } from 'vuex'
+console.log()
 
 export default defineComponent({
-	components: { Edit, Fold }
+	setup() {
+		const store = useStore()
+
+		const name = computed(() => store.state.login.userInfo.name)
+		console.log(name, 'name')
+		return { name }
+	}
 })
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.el-dropdown-link {
+	display: flex;
+	align-items: center;
+	.name {
+		margin-left: 5px;
+	}
+}
+</style>
