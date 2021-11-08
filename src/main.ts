@@ -27,7 +27,7 @@ import { Edit } from '@element-plus/icons'
 app.component(Edit.name, Edit)
 
 app.use(router)
+setupStroe()
 app.use(store)
 
-setupStroe()
 app.mount('#app')
