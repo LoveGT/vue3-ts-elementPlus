@@ -26,8 +26,9 @@ app.use(globalRegister)
 import { Edit } from '@element-plus/icons'
 app.component(Edit.name, Edit)
 
-app.use(router)
 setupStroe()
+
+app.use(router)
 app.use(store)
 
 app.mount('#app')
