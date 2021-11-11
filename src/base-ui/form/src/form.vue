@@ -4,7 +4,11 @@
 			<el-row>
 				<template v-for="item in formItems" :key="item.label">
 					<el-col :span="8" v-bind="colLayout">
-						<el-form-item v-bind="formConfig">
+						<el-form-item
+							:label="item.label"
+							:rules="item.rules"
+							:style="item.itemStyle"
+						>
 							<template
 								v-if="item.type === 'input' || item.type === 'password'"
 							>
@@ -47,6 +51,10 @@ import { defineComponent, PropType } from 'vue'
 import { IFormItem } from '../types'
 export default defineComponent({
 	props: {
+		// formData: {
+		// 	type: Object,
+		// 	required: true
+		// },
 		formItems: {
 			type: Array as PropType<IFormItem[]>,
 			default: () => []
