@@ -32,7 +32,9 @@ import {
 	ElCheckboxGroup,
 	ElSwitch,
 	ElBreadcrumb,
-	ElBreadcrumbItem
+	ElBreadcrumbItem,
+	ElTable,
+	ElTableColumn
 } from 'element-plus'
 
 const components = [
@@ -67,7 +69,9 @@ const components = [
 	ElOption,
 	ElSwitch,
 	ElBreadcrumb,
-	ElBreadcrumbItem
+	ElBreadcrumbItem,
+	ElTable,
+	ElTableColumn
 ]
 
 export default function (app: App): void {

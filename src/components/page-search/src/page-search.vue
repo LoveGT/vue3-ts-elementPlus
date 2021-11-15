@@ -45,4 +45,14 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style>
+.header {
+	color: red;
+	text-align: left;
+	padding: 0 0px 0px 20px;
+}
+.handle-btns {
+	text-align: right;
+	padding: 0 20px 20px 0;
+}
+</style>
