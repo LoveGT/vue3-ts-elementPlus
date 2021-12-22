@@ -22,6 +22,7 @@ const app = createApp(App)
 
 // 注册element-plus/其他
 app.use(globalRegister)
+
 // 统一导入el-icon图标
 import { Edit } from '@element-plus/icons'
 app.component(Edit.name, Edit)
