@@ -6,10 +6,18 @@
 			</template>
 			<template #footer>
 				<div class="handle-btns">
-					<el-button size="small" type="success" icon="el-icon-search"
+					<el-button
+						size="small"
+						type="success"
+						icon="el-icon-search"
+						@click="handleQuery"
 						>搜索</el-button
 					>
-					<el-button size="small" type="warning" icon="el-icon-refresh"
+					<el-button
+						size="small"
+						type="warning"
+						icon="el-icon-refresh"
+						@click="handleReset"
 						>重置</el-button
 					>
 				</div>
@@ -30,16 +38,35 @@ export default defineComponent({
 		}
 	},
 	components: { HyForm },
-	setup() {
-		const formData = ref({
-			id: '',
-			name: '',
-			password: '',
-			sport: '',
-			createTime: ''
-		})
+	emits: ['resetBtnClick', 'queryBtnClick'],
+	setup(props, { emit }) {
+		//双向绑定的属性应该是有配置文件的Field字段来决定的
+		const formItems = props.searchFormConfig?.formItems ?? []
+		const formOriginData: any = {}
+		for (const item of formItems) {
+			formOriginData[item.field] = ''
+		}
+		const formData = ref(formOriginData)
+
+		// 实现重置功能 （v-model方式）
+		// const handleReset = () => {
+		// 	for (const key in formOriginData) {
+		// 		formData.value[`${key}`] = formOriginData[key]
+		// 	}
+		// }
+		// 实现重置功能 （不使用语法糖方式）
+		const handleReset = () => {
+			formData.value = formOriginData
+			emit('resetBtnClick')
+		}
+		// 实现搜索功能
+		const handleQuery = () => {
+			emit('queryBtnClick', formData.value)
+		}
 		return {
-			formData
+			formData,
+			handleReset,
+			handleQuery
 		}
 	}
 })
@@ -47,7 +74,6 @@ export default defineComponent({
 
 <style>
 .header {
-	color: red;
 	text-align: left;
 	padding: 0 0px 0px 20px;
 }

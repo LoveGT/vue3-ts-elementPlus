@@ -8,7 +8,7 @@
 						<el-form-item
 							:label="item.label"
 							:rules="item.rules"
-							:style="itemStyle"
+							:style="item.itemStyle"
 						>
 							<template
 								v-if="item.type === 'input' || item.type === 'password'"
@@ -16,19 +16,15 @@
 								<el-input
 									:placeholder="item.placeholder"
 									v-bind="item.otherOptions"
-									clearable
+									v-model="formData[`${item.field}`]"
 									:show-password="item.type === 'password'"
-									:model-value="modelValue[`${item.field}`]"
-									@update:modelValue="handleValueChange($event, item.field)"
 								/>
 							</template>
 							<template v-else-if="item.type === 'select'">
 								<el-select
 									:placeholder="item.placeholder"
 									v-bind="item.otherOptions"
-									clearable
-									:model-value="modelValue[`${item.field}`]"
-									@update:modelValue="handleValueChange($event, item.field)"
+									v-model="formData[`${item.field}`]"
 									style="width: 100%"
 								>
 									<el-option
@@ -42,9 +38,7 @@
 							<template v-else-if="item.type === 'datepicker'">
 								<el-date-picker
 									v-bind="item.otherOptions"
-									clearable
-									:model-value="modelValue[`${item.field}`]"
-									@update:modelValue="handleValueChange($event, item.field)"
+									v-model="formData[`${item.field}`]"
 									style="width: 100%"
 								></el-date-picker>
 							</template>
@@ -58,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import { IFormItem } from '../types'
 export default defineComponent({
 	props: {
@@ -96,12 +90,12 @@ export default defineComponent({
 
 	emits: ['update:modelValue'],
 	setup(props, { emit }) {
-		// 非v-model的方式实现
-		const handleValueChange = (value: any, filed: string) => {
-			emit('update:modelValue', { ...props.modelValue, [filed]: value })
-		}
+		const formData = ref({ ...props.modelValue })
+		watch(formData, (newValue) => emit('update:modelValue', newValue), {
+			deep: true
+		})
 		return {
-			handleValueChange
+			formData
 		}
 	}
 })
