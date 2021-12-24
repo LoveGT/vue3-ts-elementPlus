@@ -43,6 +43,7 @@
 <script lang="ts">
 import { defineComponent, computed, onMounted } from 'vue'
 import { useStore } from '@/store'
+import { usePermission } from '@/hooks/usePermissions'
 
 import HyTable from '@/base-ui/table'
 
@@ -62,8 +63,13 @@ export default defineComponent({
 	},
 	setup(props) {
 		const store = useStore()
-
+		// 0. 获取操作权限
+		const isCreate = usePermission(props.pageName, 'create')
+		const isUpdate = usePermission(props.pageName, 'update')
+		const isDelete = usePermission(props.pageName, 'delete')
+		const isQuery = usePermission(props.pageName, 'query')
 		const getPageData = (queryInfo: any = {}) => {
+			if (!isQuery) return
 			store.dispatch('system/getPageListAction', {
 				pageName: props.pageName,
 				queryInfo: {
@@ -86,9 +92,14 @@ export default defineComponent({
 		const listCount = computed(() =>
 			store.getters[`system/getListCount`](props.pageName)
 		)
+		console.log(dataList.value, '1111')
 		return {
 			dataList,
 			listCount,
+			isCreate,
+			isUpdate,
+			isDelete,
+			isQuery,
 			getPageData
 			// userCount
 		}

@@ -10,9 +10,10 @@
 		</div>
 		<el-table
 			:data="listData"
+			v-bind="childrenProps"
+			@selection-change="handleSelectChange"
 			border
 			style="width: 100%"
-			@selection-change="handleSelectChange"
 		>
 			<el-table-column
 				v-if="showSelectColumn"
@@ -28,7 +29,7 @@
 				width="60"
 			></el-table-column>
 			<template v-for="propItem in propList" :key="propItem.prop">
-				<el-table-column v-bind="propItem" align="center">
+				<el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
 					<template #default="scope">
 						<slot :name="propItem.slotName" :row="scope.row">
 							{{ scope.row[propItem.prop] }}
@@ -82,6 +83,10 @@ export default defineComponent({
 		showSelectColumn: {
 			type: Boolean,
 			default: false
+		},
+		childrenProps: {
+			type: Object,
+			default: () => ({})
 		}
 	},
 	setup(props, { emit }) {
