@@ -43,9 +43,9 @@
 				<el-pagination
 					@size-change="handleSizeChange"
 					@current-change="handleCurrentChange"
-					:current-page="currentPage"
+					:current-page="page.currentPage"
 					:page-sizes="[10, 20, 30, 400]"
-					:page-size="100"
+					:page-size="page.pageSize"
 					layout="total, sizes, prev, pager, next, jumper"
 					:total="listCount"
 				>
@@ -58,7 +58,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-	emits: ['selectionChange'],
+	emits: ['selectionChange', 'update:page'],
 	props: {
 		title: {
 			type: String,
@@ -84,6 +84,10 @@ export default defineComponent({
 			type: Boolean,
 			default: false
 		},
+		page: {
+			type: Object,
+			default: () => ({ currentPage: 1, pageSize: 10 })
+		},
 		childrenProps: {
 			type: Object,
 			default: () => ({})
@@ -96,11 +100,11 @@ export default defineComponent({
 			emit('selectionChange', value)
 		}
 
-		const handleSizeChange = (val: any) => {
-			console.log(`${val} items per page`)
+		const handleSizeChange = (pageSize: number) => {
+			emit('update:page', { ...props.page, pageSize })
 		}
-		const handleCurrentChange = (val: any) => {
-			console.log(`current page: ${val}`)
+		const handleCurrentChange = (currentPage: number) => {
+			emit('update:page', { ...props.page, currentPage })
 		}
 		return {
 			currentPage: ref(1),

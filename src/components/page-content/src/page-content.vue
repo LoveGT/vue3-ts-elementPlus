@@ -4,10 +4,13 @@
 			:listData="dataList"
 			v-bind="contentConfig"
 			:listCount="listCount"
+			v-model:page="pageInfo"
 			@selectionChange="selectionChange"
 		>
 			<template #headerHandler>
-				<el-button type="primary" size="mini">新增用户</el-button>
+				<el-button type="primary" size="mini" v-if="isCreate"
+					>新增用户</el-button
+				>
 				<el-button icon="el-icon-refresh" size="mini"></el-button>
 			</template>
 			<template #status="scope">
@@ -27,13 +30,30 @@
 			</template>
 			<template #action>
 				<div class="handle-btns">
-					<el-button type="primary" size="mini" icon="el-icon-edit"
+					<el-button
+						v-if="isUpdate"
+						type="primary"
+						size="mini"
+						icon="el-icon-edit"
 						>编辑</el-button
 					>
-					<el-button type="warning" size="mini" icon="el-icon-delete"
+					<el-button
+						v-if="isDelete"
+						type="warning"
+						size="mini"
+						icon="el-icon-delete"
 						>删除</el-button
 					>
 				</div>
+			</template>
+			<template
+				v-for="item in otherPropSlots"
+				:key="item.prop"
+				#[item.slotName]="scope"
+			>
+				<template v-if="item.slotName">
+					<slot :name="item.slotName" :row="scope.row"></slot>
+				</template>
 			</template>
 			<!-- <template #footer> 11111 </template> -->
 		</hy-table>
@@ -41,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue'
+import { defineComponent, computed, onMounted, ref, watch } from 'vue'
 import { useStore } from '@/store'
 import { usePermission } from '@/hooks/usePermissions'
 
@@ -63,18 +83,25 @@ export default defineComponent({
 	},
 	setup(props) {
 		const store = useStore()
+		const pageInfo = ref({
+			currentPage: 1,
+			pageSize: 10
+		})
 		// 0. 获取操作权限
 		const isCreate = usePermission(props.pageName, 'create')
+		console.log(isCreate)
 		const isUpdate = usePermission(props.pageName, 'update')
 		const isDelete = usePermission(props.pageName, 'delete')
 		const isQuery = usePermission(props.pageName, 'query')
+		console.log(isQuery, 'qG')
+		console.log(isUpdate, 'u')
 		const getPageData = (queryInfo: any = {}) => {
-			if (!isQuery) return
+			// if (!isQuery) return
 			store.dispatch('system/getPageListAction', {
 				pageName: props.pageName,
 				queryInfo: {
-					offset: 0,
-					size: 20,
+					offset: pageInfo.value.currentPage,
+					size: pageInfo.value.pageSize,
 					...queryInfo
 				}
 			})
@@ -82,6 +109,9 @@ export default defineComponent({
 
 		onMounted(() => {
 			getPageData() //可以直接在setup
+		})
+		watch(pageInfo, () => {
+			getPageData()
 		})
 		// action的方式
 		// const dataList = computed(() => store.state.system[`${props.pageName}List`])
@@ -92,10 +122,20 @@ export default defineComponent({
 		const listCount = computed(() =>
 			store.getters[`system/getListCount`](props.pageName)
 		)
-		console.log(dataList.value, '1111')
+		//获取其他的动态插槽名
+		const otherPropSlots = props.contentConfig.propList.filter((item: any) => {
+			if (item.slotName === 'status') return false
+			if (item.slotName === 'createAt') return false
+			if (item.slotName === 'updateAt') return false
+			if (item.slotName === 'action') return false
+			return true
+		})
+
 		return {
 			dataList,
 			listCount,
+			pageInfo,
+			otherPropSlots,
 			isCreate,
 			isUpdate,
 			isDelete,
