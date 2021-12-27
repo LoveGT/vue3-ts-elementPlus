@@ -8,7 +8,7 @@
 			@selectionChange="selectionChange"
 		>
 			<template #headerHandler>
-				<el-button type="primary" size="mini" v-if="isCreate"
+				<el-button type="primary" size="mini" v-if="isCreate" @click="handleAdd"
 					>新增用户</el-button
 				>
 				<el-button icon="el-icon-refresh" size="mini"></el-button>
@@ -28,13 +28,14 @@
 					$filters.formatTimestamp(scope.row.updateAt, 'YYYYMMDD')
 				}}</span>
 			</template>
-			<template #action>
+			<template #action="scope">
 				<div class="handle-btns">
 					<el-button
 						v-if="isUpdate"
 						type="primary"
 						size="mini"
 						icon="el-icon-edit"
+						@click="handleEdit(scope.row)"
 						>编辑</el-button
 					>
 					<el-button
@@ -42,6 +43,7 @@
 						type="warning"
 						size="mini"
 						icon="el-icon-delete"
+						@click="handleDelete(scope.row)"
 						>删除</el-button
 					>
 				</div>
@@ -68,6 +70,7 @@ import { usePermission } from '@/hooks/usePermissions'
 import HyTable from '@/base-ui/table'
 
 export default defineComponent({
+	emits: ['addClick', 'editClick'],
 	props: {
 		contentConfig: {
 			type: Object,
@@ -81,7 +84,7 @@ export default defineComponent({
 	components: {
 		HyTable
 	},
-	setup(props) {
+	setup(props, { emit }) {
 		const store = useStore()
 		const pageInfo = ref({
 			currentPage: 1,
@@ -130,7 +133,22 @@ export default defineComponent({
 			if (item.slotName === 'action') return false
 			return true
 		})
-
+		// 删除、编辑、新增操作
+		const handleDelete = (row: any) => {
+			console.log(row)
+			store.dispatch('system/deletePageDataAction', {
+				pageName: props.pageName,
+				id: row.id
+			})
+		}
+		const handleAdd = () => {
+			console.log('add')
+			emit('addClick')
+		}
+		const handleEdit = (row: any) => {
+			console.log(row)
+			emit('editClick', row)
+		}
 		return {
 			dataList,
 			listCount,
@@ -140,7 +158,10 @@ export default defineComponent({
 			isUpdate,
 			isDelete,
 			isQuery,
-			getPageData
+			getPageData,
+			handleDelete,
+			handleAdd,
+			handleEdit
 			// userCount
 		}
 	}
