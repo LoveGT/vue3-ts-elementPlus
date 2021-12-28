@@ -2,7 +2,14 @@ import { Module } from 'vuex'
 import { ISystemState } from './types'
 import { IRootState } from '@/store/types'
 
-import { deletePageData, getPageListData } from '@/service/main/system/system'
+import { ElMessage, ElMessageBox } from 'element-plus'
+
+import {
+	deletePageData,
+	getPageListData,
+	createPageData,
+	editPageData
+} from '@/service/main/system/system'
 
 const systemMoudle: Module<ISystemState, IRootState> = {
 	namespaced: true,
@@ -92,22 +99,73 @@ const systemMoudle: Module<ISystemState, IRootState> = {
 				pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
 			commit(`change${formatPageName}List`, list)
 			commit(`change${formatPageName}Count`, totalCount)
+			ElMessage({
+				message: '查询成功',
+				type: 'success',
+				center: true
+			})
 		},
-		async deletePageDataAction(context, payload: any) {
+		async deletePageDataAction({ dispatch }, payload: any) {
 			// pageName
 			// id
 			const { pageName, id } = payload
 			const pageUrl = `/${pageName}/${id}/`
-			// 调用删除网络请求
-			await deletePageData(pageUrl)
-			//获取删除后的最新数据
-			this.dispatch('system/getPageListAction', {
+
+			ElMessageBox.confirm('是否删除数据？', '警告', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning',
+				center: true
+			})
+				.then(async () => {
+					// 调用删除网络请求
+					await deletePageData(pageUrl)
+					//获取删除后的最新数据
+					dispatch('getPageListAction', {
+						pageName,
+						queryInfo: {
+							offset: 0,
+							size: 10
+						}
+					})
+				})
+				.catch(() => {
+					ElMessage.info('取消删除')
+				})
+		},
+		//新增数据
+		async createPageDataAction({ dispatch }, payload: any) {
+			const { pageName, newData } = payload
+			const pageUrl = `/${pageName}`
+
+			await createPageData(pageUrl, newData)
+
+			// 2.请求最新的数据
+			dispatch('getPageListAction', {
 				pageName,
 				queryInfo: {
 					offset: 0,
 					size: 10
 				}
 			})
+			ElMessage.success('新增数据成功')
+		},
+		// 更新数据
+		async editPageDataAction({ dispatch }, payload: any) {
+			const { pageName, editData, id } = payload
+			const pageUrl = `/${pageName}/${id}`
+			await editPageData(pageUrl, editData)
+
+			// 2.请求最新的数据
+			dispatch('getPageListAction', {
+				pageName,
+				queryInfo: {
+					offset: 0,
+					size: 10
+				}
+			})
+
+			ElMessage.success('更新数据成功')
 		}
 	}
 }

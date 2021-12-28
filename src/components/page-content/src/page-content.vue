@@ -92,18 +92,15 @@ export default defineComponent({
 		})
 		// 0. 获取操作权限
 		const isCreate = usePermission(props.pageName, 'create')
-		console.log(isCreate)
 		const isUpdate = usePermission(props.pageName, 'update')
 		const isDelete = usePermission(props.pageName, 'delete')
 		const isQuery = usePermission(props.pageName, 'query')
-		console.log(isQuery, 'qG')
-		console.log(isUpdate, 'u')
 		const getPageData = (queryInfo: any = {}) => {
 			// if (!isQuery) return
 			store.dispatch('system/getPageListAction', {
 				pageName: props.pageName,
 				queryInfo: {
-					offset: pageInfo.value.currentPage,
+					offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
 					size: pageInfo.value.pageSize,
 					...queryInfo
 				}
@@ -135,18 +132,15 @@ export default defineComponent({
 		})
 		// 删除、编辑、新增操作
 		const handleDelete = (row: any) => {
-			console.log(row)
 			store.dispatch('system/deletePageDataAction', {
 				pageName: props.pageName,
 				id: row.id
 			})
 		}
 		const handleAdd = () => {
-			console.log('add')
 			emit('addClick')
 		}
 		const handleEdit = (row: any) => {
-			console.log(row)
 			emit('editClick', row)
 		}
 		return {

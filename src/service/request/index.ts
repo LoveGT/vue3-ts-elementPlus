@@ -85,7 +85,6 @@ class HYRequest {
 					if (config.interceptors?.responseInterceptor) {
 						res = config.interceptors.responseInterceptor(res)
 					}
-					console.log(res, 'res-request')
 					// 2.请求完成后将我们的showLoading设置为初始值，这样不会影响到别的请求
 					this.showLoading = defaultLoading
 					// 3.将结果resolve返回出去

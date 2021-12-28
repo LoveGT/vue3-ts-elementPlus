@@ -6,6 +6,7 @@
 				<template v-for="item in formItems" :key="item.label">
 					<el-col :span="8" v-bind="colLayout">
 						<el-form-item
+							v-if="!item.isHidden"
 							:label="item.label"
 							:rules="item.rules"
 							:style="itemStyle"
@@ -35,6 +36,7 @@
 										v-for="option in item.options"
 										:value="option.value"
 										:key="option.value"
+										:label="option.label"
 										>{{ option.title }}</el-option
 									>
 								</el-select>

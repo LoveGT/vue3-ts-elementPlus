@@ -31,7 +31,6 @@ export default defineComponent({
 			varify: ''
 		})
 		const loginAction = (isKeepPassword: boolean) => {
-			console.log('phone登录正在开始')
 			console.log(isKeepPassword, 'keepPaword')
 			store.dispatch('login/phoneLoginAction', { ...phone })
 		}

@@ -1,4 +1,6 @@
-export const modelConfig = {
+import { IForm } from '@/base-ui/form'
+
+export const modelConfig: IForm = {
 	itemStyle: {},
 	formItems: [
 		{
@@ -20,7 +22,8 @@ export const modelConfig = {
 			type: 'password',
 			label: '密码',
 			rules: [],
-			placeholder: '请输入密码'
+			placeholder: '请输入密码',
+			isHidden: true
 		},
 		{
 			field: 'cellphone',
@@ -28,6 +31,22 @@ export const modelConfig = {
 			label: '电话号码',
 			rules: [],
 			placeholder: '请输入电话号码'
+		},
+		{
+			field: 'departmentId',
+			type: 'select',
+			label: '选择部门',
+			rules: [],
+			placeholder: '请选择部门',
+			options: []
+		},
+		{
+			field: 'roleId',
+			type: 'select',
+			label: '选择角色',
+			rules: [],
+			placeholder: '请选择角色',
+			options: []
 		}
 	],
 	colLayout: {

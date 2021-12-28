@@ -94,9 +94,7 @@ export default defineComponent({
 		}
 	},
 	setup(props, { emit }) {
-		console.log(props.listCount, 'props')
 		const handleSelectChange = (value: any) => {
-			console.log(value)
 			emit('selectionChange', value)
 		}
 

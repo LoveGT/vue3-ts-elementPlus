@@ -9,14 +9,10 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 	//1. 先去加载默认所有的routes
 	const allRoutes: RouteRecordRaw[] = []
 	const routerFiles = require.context('../router/main', true, /\.ts/)
-	// console.log(routerFiles, 'routerFiles')
 	routerFiles.keys().forEach((key) => {
-		// console.log(key, 'key')
-		// key  => ./system/user/user.ts key
 		const route = require('../router/main' + key.split('.')[1])
 		allRoutes.push(route.default)
 	})
-	// console.log(allRoutes, 'all')
 
 	//2. 根据菜单获取需要添加的routes
 	// userMenus:
@@ -62,7 +58,6 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 // 		if (menu.type === 1) {
 // 			const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
 // 			if (findMenu) {
-// 				console.log(findMenu, 'findMenu')
 // 				return findMenu
 // 			}
 // 		} else if (menu.type === 2 && menu.url === currentPath) {

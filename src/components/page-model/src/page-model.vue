@@ -1,13 +1,17 @@
 <template>
 	<div class="page-model">
-		<el-dialog v-model="dialogVisible" title="新建用户" width="30%" center>
+		<el-dialog
+			v-model="dialogVisible"
+			:title="title"
+			width="30%"
+			destroy-on-close
+			center
+		>
 			<hy-form v-model="formData" v-bind="modelConfig"></hy-form>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="dialogVisible = false">Cancel</el-button>
-					<el-button type="primary" @click="dialogVisible = false"
-						>Confirm</el-button
-					>
+					<el-button @click="dialogVisible = false">取消</el-button>
+					<el-button type="primary" @click="handleConfirm">确认</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -15,26 +19,68 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import HyForm from '@/base-ui/form'
+import { useStore } from '@/store'
 
 export default defineComponent({
 	props: {
 		modelConfig: {
 			type: Object,
 			required: true
+		},
+		defaultInfo: {
+			type: Object,
+			default: () => ({})
+		},
+		title: {
+			type: String,
+			default: '默认标题'
+		},
+		pageName: {
+			type: String,
+			require: true
 		}
 	},
 	components: {
 		HyForm
 	},
-	setup() {
-		const dialogVisible = ref(true)
-		const formData = {}
+	setup(props) {
+		const dialogVisible = ref(false)
+		const formData = ref({})
+
+		watch(
+			() => props.defaultInfo,
+			(newVal) => {
+				for (const item of props.modelConfig.formItems) {
+					formData.value[`${item.field}`] = newVal[`${item.field}`]
+				}
+			}
+		)
+		const store = useStore()
+		const handleConfirm = () => {
+			dialogVisible.value = false
+			// 编辑
+			if (Object.keys(props.defaultInfo).length) {
+				store.dispatch('system/editPageDataAction', {
+					pageName: props.pageName,
+					editData: { ...formData.value },
+					id: props.defaultInfo.id
+				})
+			} else {
+				//新增
+				store.dispatch('system/createPageDataAction', {
+					pageName: props.pageName,
+					newData: { ...formData.value }
+				})
+				console.log('xinzeng')
+			}
+		}
 
 		return {
 			dialogVisible,
-			formData
+			formData,
+			handleConfirm
 		}
 	}
 })

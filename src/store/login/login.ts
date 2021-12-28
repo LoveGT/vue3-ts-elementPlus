@@ -46,26 +46,25 @@ const loginModule: Module<ILoginState, IRootState> = {
 		}
 	},
 	actions: {
-		async accountLoginAction({ commit }, payload: IAccount) {
+		async accountLoginAction({ commit, dispatch }, payload: IAccount) {
 			//1.实现登录逻辑
 			const loginResult = await accountLoginRequest(payload)
-			// console.log(loginResult, 'loginresult')
 			const { id, token } = loginResult.data
 			commit('changeToken', token)
 			localCache.setCache('token', token)
+
+			//发送初始化的请求（完整的role, department）
+			dispatch('getInitialDataAction', null, { root: true })
 
 			// 2. 请求用户信息
 			const userInfoResult = await requestUserInfoById(id)
 			const userInfo = userInfoResult.data
 			commit('changeUserInfo', userInfo)
 			localCache.setCache('userInfo', userInfo)
-			console.log(userInfo, 'userInfo-store')
 
 			//3.请求用户菜单
 			const userMenusResult = await requestUserMenuByRoleId(userInfo.role.id)
-			console.log(userMenusResult, 'result-stroe')
 			const userMenus = userMenusResult.data
-			console.log(userMenus, 'userMenus-store')
 			commit('changeUserMenus', userMenus)
 			localCache.setCache('userMenus', userMenus)
 
@@ -73,10 +72,12 @@ const loginModule: Module<ILoginState, IRootState> = {
 			router.push('/main')
 		},
 		// 解决刷新vuex的数据消失问题、
-		loadLocalLogin({ commit }) {
+		loadLocalLogin({ commit, dispatch }) {
 			const token = localCache.getCache('token')
 			if (token) {
 				commit('changeToken', token)
+				//发送初始化的请求（完整的role, department）
+				dispatch('getInitialDataAction', null, { root: true })
 			}
 			const userInfo = localCache.getCache('userInfo')
 			if (userInfo) {
