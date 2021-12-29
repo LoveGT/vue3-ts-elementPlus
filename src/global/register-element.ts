@@ -39,7 +39,8 @@ import {
 	ElConfigProvider,
 	ElImage,
 	ElDialog,
-	ElMessage
+	ElMessage,
+	ElTree
 } from 'element-plus'
 
 const components = [
@@ -81,7 +82,8 @@ const components = [
 	ElConfigProvider,
 	ElImage,
 	ElDialog,
-	ElMessage
+	ElMessage,
+	ElTree
 ]
 
 export default function (app: App): void {

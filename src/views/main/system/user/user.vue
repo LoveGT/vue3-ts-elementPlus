@@ -9,6 +9,7 @@
 			ref="pageContentRef"
 			:contentConfig="contentConfig"
 			pageName="users"
+			btnTitle="新增用户"
 			@addClick="handleAdd"
 			@editClick="handleEdit"
 		></page-content>
@@ -23,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { useStore } from '@/store'
 
 import { searchFormConfig } from './config/search.config'

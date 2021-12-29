@@ -99,11 +99,11 @@ const systemMoudle: Module<ISystemState, IRootState> = {
 				pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
 			commit(`change${formatPageName}List`, list)
 			commit(`change${formatPageName}Count`, totalCount)
-			ElMessage({
-				message: '查询成功',
-				type: 'success',
-				center: true
-			})
+			// ElMessage({
+			// 	message: '查询成功',
+			// 	type: 'success',
+			// 	center: true
+			// })
 		},
 		async deletePageDataAction({ dispatch }, payload: any) {
 			// pageName

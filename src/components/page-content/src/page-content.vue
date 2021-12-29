@@ -8,8 +8,12 @@
 			@selectionChange="selectionChange"
 		>
 			<template #headerHandler>
-				<el-button type="primary" size="mini" v-if="isCreate" @click="handleAdd"
-					>新增用户</el-button
+				<el-button
+					type="primary"
+					size="mini"
+					v-if="isCreate"
+					@click="handleAdd"
+					>{{ btnTitle }}</el-button
 				>
 				<el-button icon="el-icon-refresh" size="mini"></el-button>
 			</template>
@@ -79,6 +83,10 @@ export default defineComponent({
 		pageName: {
 			type: String,
 			required: true
+		},
+		btnTitle: {
+			type: String,
+			default: ''
 		}
 	},
 	components: {

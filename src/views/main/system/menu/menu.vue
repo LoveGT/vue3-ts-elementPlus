@@ -5,6 +5,7 @@
 			ref="pageContentRef"
 			:contentConfig="contentConfig"
 			pageName="menu"
+			btnTitle="新增菜单"
 		></page-content>
 	</div>
 </template>

@@ -1,6 +1,10 @@
 <template>
 	<div class="goods">
-		<page-content :contentConfig="contentConfig" pageName="goods">
+		<page-content
+			:contentConfig="contentConfig"
+			pageName="goods"
+			btnTitle="新增菜单"
+		>
 			<template #oldPrice="scope">
 				{{ '￥' + scope.row.oldPrice }}
 			</template>
