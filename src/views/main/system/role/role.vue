@@ -19,6 +19,7 @@
 			<div class="el-tree-box">
 				<label>菜单权限</label>
 				<el-tree
+					ref="elTreeRef"
 					:data="menus"
 					show-checkbox
 					node-key="id"
@@ -32,8 +33,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, nextTick } from 'vue'
 import { useStore } from '@/store'
+import { menuMapLeafKeys } from '@/utils/map-menus'
 
 import { searchFormConfig } from './config/search.config'
 import { contentConfig } from './config/content.config'
@@ -44,6 +46,7 @@ import { usePageModel } from '@/hooks/usePageModel'
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
 import PageModel from '@/components/page-model'
+import { ElTree } from 'element-plus'
 
 export default defineComponent({
 	name: 'role',
@@ -62,16 +65,15 @@ export default defineComponent({
 				passwordItem.isHidden = false
 			}
 		}
-		const editCallback = () => {
-			const passwordItem = modelConfig.formItems.find(
-				(item) => item.field === 'password'
-			)
-			if (passwordItem) {
-				passwordItem.isHidden = true
-			}
+		const elTreeRef = ref<InstanceType<typeof ElTree>>()
+		const editCallback = (row: any) => {
+			const leafKeys = menuMapLeafKeys(row.menuList)
+			nextTick(() => {
+				elTreeRef.value?.setCheckedKeys(leafKeys, false)
+			})
 		}
 		const [pageModelRef, defaultInfo, title, handleAdd, handleEdit] =
-			usePageModel(addCallback, editCallback)
+			usePageModel(undefined, editCallback)
 
 		// 获取el-tree的数据
 		const store = useStore()
@@ -91,6 +93,7 @@ export default defineComponent({
 			defaultInfo,
 			title,
 			menus,
+			elTreeRef,
 			otherInfo,
 			handleAdd,
 			handleEdit,

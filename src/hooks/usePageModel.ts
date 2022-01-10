@@ -1,9 +1,9 @@
 import { ref } from 'vue'
 import PageModel from '@/components/page-model'
 
-type CallbackFns = () => void
+type CallbackFns = (item?: any) => void
 
-export function usePageModel(addCb: CallbackFns, editCb: CallbackFns) {
+export function usePageModel(addCb?: CallbackFns, editCb?: CallbackFns) {
 	const pageModelRef = ref<InstanceType<typeof PageModel>>()
 	const defaultInfo = ref({})
 	const title = ref('')
@@ -22,7 +22,7 @@ export function usePageModel(addCb: CallbackFns, editCb: CallbackFns) {
 			defaultInfo.value = { ...row }
 			title.value = '编辑'
 		}
-		editCb && editCb()
+		editCb && editCb(row)
 	}
 	return [pageModelRef, defaultInfo, title, handleAdd, handleEdit]
 }
