@@ -8,16 +8,19 @@
 import { withDefaults, defineProps, computed } from 'vue'
 import BaseEchart from '@/base-ui/echart'
 import { IDataType } from '../types'
-type RadiusType = string | number
+
+type RadiusType = (number | string)[] | number | string
 const props = withDefaults(
 	defineProps<{
 		pieData: IDataType[]
-		pieChartType: string
-		pieRadius: RadiusType
+		pieChartType?: string
+		roseType?: string | boolean
+		pieRadius?: RadiusType
 	}>(),
 	{
 		pieChartType: 'pie',
-		pieRadius: '12%'
+		roseType: '',
+		pieRadius: () => ['45%', '75%']
 	}
 )
 
@@ -34,8 +37,9 @@ const options = computed(() => {
 			{
 				name: '分类数据',
 				type: props.pieChartType,
-				radius: '50%',
+				radius: props.pieRadius,
 				data: props.pieData,
+				roseType: props.roseType,
 				emphasis: {
 					itemStyle: {
 						shadowBlur: 10,
