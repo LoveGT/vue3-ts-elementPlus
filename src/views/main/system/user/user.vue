@@ -1,10 +1,12 @@
 <template>
 	<div class="user page-container">
+		<!-- 表单 -->
 		<page-search
 			:searchFormConfig="searchFormConfig"
 			@resetBtnClick="handleReset"
 			@queryBtnClick="handleQuery"
 		/>
+		<!-- 表格 -->
 		<page-content
 			ref="pageContentRef"
 			:contentConfig="contentConfig"
@@ -13,6 +15,7 @@
 			@addClick="handleAdd"
 			@editClick="handleEdit"
 		></page-content>
+		<!-- 弹窗 -->
 		<page-model
 			ref="pageModelRef"
 			:defaultInfo="defaultInfo"

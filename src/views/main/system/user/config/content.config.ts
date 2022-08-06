@@ -1,5 +1,13 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: tanchongzheng
+ * @Date: 2022-08-06 14:01:30
+ * @LastEditors:
+ * @LastEditTime: 2022-08-06 17:09:19
+ */
 export const contentConfig = {
-	title: '用户列表',
+	// title: '用户列表',
 	propList: [
 		{ prop: 'name', label: '用户名', minWidth: '100' },
 		{ prop: 'realname', label: '真实姓名', minWidth: '100' },

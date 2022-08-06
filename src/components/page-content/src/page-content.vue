@@ -7,7 +7,7 @@
 			v-model:page="pageInfo"
 			@selectionChange="selectionChange"
 		>
-			<template #headerHandler>
+			<!-- <template #headerHandler>
 				<el-button
 					type="primary"
 					size="mini"
@@ -16,7 +16,7 @@
 					>{{ btnTitle }}</el-button
 				>
 				<el-button icon="el-icon-refresh" size="mini"></el-button>
-			</template>
+			</template> -->
 			<template #status="scope">
 				<el-button
 					size="mini"
@@ -171,10 +171,10 @@ export default defineComponent({
 </script>
 
 <style soped lang="less">
-.page-content {
-	padding: 20px;
-	border: 1px solid red;
-}
+// .page-content {
+// 	padding: 20px;
+// 	border: 1px solid red;
+// }
 .handle-btns {
 	display: flex;
 	justify-content: center;

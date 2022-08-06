@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanchongzheng
+ * @Date: 2022-08-06 14:01:30
+ * @LastEditors: 
+ * @LastEditTime: 2022-08-06 17:23:45
+-->
 <template>
 	<el-card class="box-card">
 		<template #header>
@@ -46,6 +54,5 @@ export default defineComponent({
 
 .item {
 	margin-bottom: 10px;
-	// border: 1px solid red;
 }
 </style>

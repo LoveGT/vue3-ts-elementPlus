@@ -4,7 +4,7 @@
  * @Author: tanchongzheng
  * @Date: 2022-08-06 14:01:30
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-08-06 15:31:51
+ * @LastEditTime: 2022-08-06 17:22:56
 -->
 <template>
 	<div class="app-container">
@@ -58,11 +58,7 @@ export default defineComponent({
 }
 
 .app-wrapper {
-	border: 1px solid deepskyblue;
 	height: 100%;
-}
-.app-content {
-	// border: 5px solid red;
 }
 
 .app-main {

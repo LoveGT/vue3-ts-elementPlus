@@ -1,5 +1,13 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanchongzheng
+ * @Date: 2022-08-06 14:01:30
+ * @LastEditors: 
+ * @LastEditTime: 2022-08-06 17:29:07
+-->
 <template>
-	<div class="goods">
+	<div class="goods page-container">
 		<page-content
 			:contentConfig="contentConfig"
 			pageName="goods"

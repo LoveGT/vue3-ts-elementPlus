@@ -1,5 +1,13 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanchongzheng
+ * @Date: 2022-08-06 14:01:30
+ * @LastEditors: 
+ * @LastEditTime: 2022-08-06 17:28:01
+-->
 <template>
-	<div class="menu">
+	<div class="menu page-container">
 		<page-search :searchFormConfig="searchFormConfig" />
 		<page-content
 			ref="pageContentRef"

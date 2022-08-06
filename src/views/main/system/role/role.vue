@@ -1,5 +1,5 @@
 <template>
-	<div class="role">
+	<div class="role page-container">
 		<page-search :searchFormConfig="searchFormConfig"></page-search>
 		<page-content
 			:contentConfig="contentConfig"
