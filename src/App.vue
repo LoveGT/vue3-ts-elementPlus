@@ -1,5 +1,13 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanchongzheng
+ * @Date: 2022-08-06 14:01:30
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-08-06 14:40:09
+-->
 <template>
-	<div class="app">
+	<div id="app">
 		<el-config-provider :locale="zhCn">
 			<router-view></router-view>
 		</el-config-provider>
@@ -21,7 +29,7 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-.app {
-	height: 100%;
-}
+// #app {
+// 	height: 100%;
+// }
 </style>

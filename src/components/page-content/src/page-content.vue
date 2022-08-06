@@ -173,7 +173,7 @@ export default defineComponent({
 <style soped lang="less">
 .page-content {
 	padding: 20px;
-	border-top: 20px solid #f5f5f5;
+	border: 1px solid red;
 }
 .handle-btns {
 	display: flex;

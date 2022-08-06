@@ -1,5 +1,5 @@
 <template>
-	<div class="user">
+	<div class="user page-container">
 		<page-search
 			:searchFormConfig="searchFormConfig"
 			@resetBtnClick="handleReset"

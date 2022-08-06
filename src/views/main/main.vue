@@ -1,17 +1,23 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: tanchongzheng
+ * @Date: 2022-08-06 14:01:30
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-08-06 15:31:51
+-->
 <template>
-	<div class="main">
-		<el-container class="main-content">
+	<div class="app-container">
+		<el-container class="app-wrapper">
 			<el-aside :width="isCollapse ? '60px' : '210px'">
 				<nav-menu :collapse="isCollapse"></nav-menu>
 			</el-aside>
-			<el-container class="page">
+			<el-container class="app-content">
 				<el-header class="page-header">
 					<nav-header @foldChange="handleFoldChange" />
 				</el-header>
-				<el-main class="page-content">
-					<div class="page-info">
-						<router-view></router-view>
-					</div>
+				<el-main class="app-main">
+					<router-view></router-view>
 				</el-main>
 			</el-container>
 		</el-container>
@@ -43,25 +49,28 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.main {
-	position: fixed;
-	top: 0;
-	left: 0;
+.app-container {
+	// position: relative;
+	// top: 0;
+	// left: 0;
 	width: 100%;
 	height: 100%;
 }
 
-.main-content,
-.page {
+.app-wrapper {
+	border: 1px solid deepskyblue;
 	height: 100%;
 }
+.app-content {
+	// border: 5px solid red;
+}
 
-.page-content {
+.app-main {
+	position: relative;
+	color: #333;
+	text-align: center;
+	background-color: #fff;
 	height: calc(100% - 48px);
-	.page-info {
-		background: #fff;
-		border-radius: 5px;
-	}
 }
 
 .el-header,
@@ -90,11 +99,5 @@ export default defineComponent({
 	&::-webkit-scrollbar {
 		display: none;
 	}
-}
-
-.el-main {
-	color: #333;
-	text-align: center;
-	background-color: #f0f2f5;
 }
 </style>

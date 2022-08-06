@@ -11,6 +11,7 @@
 		<el-table
 			:data="listData"
 			v-bind="childrenProps"
+			height="100%"
 			@selection-change="handleSelectChange"
 			border
 			style="width: 100%"
